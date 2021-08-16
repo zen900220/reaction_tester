@@ -6,9 +6,8 @@
     <style media="screen">
       #top{
         margin-bottom: 30px;
-        width:100%;
+        width:1520px;
         height:100px;
-        background-color: blue;
       }
       #Start{
         font-size: 30px;
@@ -17,9 +16,8 @@
         left: 50%;
       }
       #targetSpace{
-        width:100%;
+        width:1520px;
         height:590px;
-        background-color: green;
       }
       #target{
         display: none;
@@ -37,32 +35,35 @@
       <button type="button" name="button" id="target"></button>
     </div>
     <script type="text/javascript">
-      let edge,colour,top,left,strt,end;
+      let edge,val,colour,topMargin,left,strt,end;
       function targetStats(){
-        edge = Math.floor(Math.random()*171 + 30).toString()+"px";
+        val=Math.floor(Math.random()*171 + 30);
+        edge = val.toString()+"px";
         colour = '#'+Math.floor(Math.random()*16777216).toString(16);
-        top = Math.floor(Math.random()*(590-edge+1)).toString()+"px";
-        left = Math.floor(Math.random()*(1920-edge+1)).toString()+"px";
+        topMargin = Math.floor(Math.random()*(590-val+1)).toString()+"px";
+        left = Math.floor(Math.random()*(1520-val+1)).toString()+"px";
       }
       function generateTarget(){
         let x =document.getElementById("target");
         x.style.height =edge;
         x.style.width =edge;
         x.style.backgroundColor =colour;
-        x.style.top =top;
+        x.style.top =topMargin;
         x.style.left =left;
         var c =Math.floor(Math.random()*2);
         if(c==0){
-          x.style.borderRadius=50%;
+          x.style.borderRadius="50%";
         }
         else{
-          x.style.borderRadius=0%;
+          x.style.borderRadius="0%";
         }
       }
-      document.getElementById("Start").onclick=setTimeout(function(){targetStats();generateTarget();document.getElementById("target").style.display=inline-block;strt=performance.now();},3000);
+      document.getElementById("Start").onclick=function(){
+        setTimeout(function(){targetStats();generateTarget();document.getElementById("target").style.display="inline-block";strt=performance.now();},3000);
+      }
       document.getElementById("target").onclick=function(){
         end=performance.now();
-        document.getElementById("time").innerHTML = end-strt;
+        document.getElementById("time").innerHTML = Math.floor(end-strt);
         targetStats();
         generateTarget();
         strt = performance.now();
