@@ -12,8 +12,16 @@
       #Start{
         font-size: 30px;
         font-weight: bold;
-        position: relative;
-        left: 50%;
+        width: 50%;
+        background-color: green;
+        float: left;
+      }
+      #Stop{
+        font-size: 30px;
+        font-weight: bold;
+        width: 50%;
+        background-color: red;
+        float: left;
       }
       #targetSpace{
         width:1520px;
@@ -28,14 +36,15 @@
   <body>
     <div class="" id="top">
       <h1>Let's get those reflexes goin. Press Start to begin.</h1>
-      <button type="button" name="button" id="Start">Start</button>
-      <span>Reaction Time : <span id="time"></span>ms</span>
+      <button type="button" name="button" id="Start"><div class="">Start</div> </button>
+      <button type="button" name="button" id="Stop"><div class="">Stop</div> </button>
     </div>
     <div class="" id="targetSpace">
       <button type="button" name="button" id="target"></button>
     </div>
     <script type="text/javascript">
       let edge,val,colour,topMargin,left,strt,end;
+      let timeRecord=[];
       function targetStats(){
         val=Math.floor(Math.random()*171 + 30);
         edge = val.toString()+"px";
@@ -63,10 +72,22 @@
       }
       document.getElementById("target").onclick=function(){
         end=performance.now();
-        document.getElementById("time").innerHTML = Math.floor(end-strt);
+        timeRecord.push(Math.floor(end-strt));
         targetStats();
         generateTarget();
         strt = performance.now();
+      }
+      document.getElementById("Stop").onclick=function() {
+        document.getElementById("target").style.display="none";
+        let max=Math.max(...timeRecord);
+        let min=Math.min(...timeRecord);
+        var avg=0;
+        for(var i=0;i<timeRecord.length;i++){
+          avg = avg + timeRecord[i];
+        }
+        avg = avg/timeRecord.length;
+        alert("Slowest Time:"+ max +"  Fastest Time:"+min+"  Average Time:"+avg);
+        timeRecord.splice(0,timeRecord.length);
       }
     </script>
   </body>
